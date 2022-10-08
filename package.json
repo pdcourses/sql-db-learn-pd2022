@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/pdcourses/sql-db-learn-pd2022#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.23.2"
