@@ -7,9 +7,10 @@ getAllUsers
 getUserByLogin
 */
 
-const { User } = require("./db/models");
-const bcrypt = require('bcrypt');
+const { User, Task } = require("./db/models");
+//const bcrypt = require('bcrypt');
 
+/*
 const hashPasswordFun = async password => {
     try{
         return bcrypt.hash(password, 10);
@@ -40,6 +41,8 @@ const data = {
 
 createUser(data).then(console.log).catch(console.err);
 */
+
+/*
 
 const getUserById = async id => {
     try{
@@ -116,3 +119,158 @@ console.log('Ищем 3 человека. обновление');
 updateUser(3, {email: "new3@mail.com", age: 25}).then(console.log).catch(console.err);
 console.log('Ищем 3 человека. инфа после обновления');
 getUserById(3).then(console.log).catch(console.err);
+
+
+/************** TASKS */
+// CRUD
+// createTask, getTaskById, updateTaskById, deleteTaskById
+// getAllTasks
+
+// task {}  :
+// [id, createdAt, updatedAt],
+// userId, name, isDone, deadline
+
+// createTask function
+const createTask = async (data) => {
+  try {
+    const newTask = await Task.create(data);
+    return newTask;
+  } catch (e) {
+    throw e;
+  }
+};
+// getTaskById function
+const getTaskById = async (id) => {
+  try {
+    const foundTask = await Task.findByPk(id);
+    return foundTask;
+  } catch (e) {
+    throw e;
+  }
+};
+// updateTaskById function
+const updateTaskById = async (id, data) => {
+  try {
+    const [updatedRowCount, updatedRows] = await Task.update(data, {
+      where: { id: id },
+      returning: true,
+    });
+    if (updatedRowCount) {
+      const task = updatedRows[0].get();
+      return task;
+    }
+  } catch (e) {
+    throw e;
+  }
+};
+// deleteTaskById function
+const deleteTaskById = async (taskId) => {
+  try {
+    const foundTask = await Task.destroy({
+      where: {
+        id: taskId,
+      },
+    });
+    return foundTask;
+  } catch (e) {
+    throw e;
+  }
+};
+
+// getAllTasks function
+
+const getAllTasks = async (data) => {
+  const { limit, offset } = data;
+  try {
+    const tasks = await Task.findAll({
+      limit: limit || 5,
+      offset: offset || 0,
+      order: ["deadline"],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+    return tasks;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const testTask = {
+  UserId: 12,
+  name: "test task for #user",
+  isDone: false,
+  deadline: "2022-12-10 14:00",
+};
+
+//createTask(testTask).then(console.log).catch(console.err);
+//getTaskById(3).then(console.log).catch(console.err);
+//updateTaskById(3, {isDone: true}).then(console.log).catch(console.err);
+//getTaskById(3).then(console.log).catch(console.err);
+//deleteTaskById(3).then(console.log).catch(console.err);
+
+//getAllTasks({}).then(console.log);
+
+// getTaskByUserId
+/*
+const getTaskByUserId = async (userId) => {
+  try {
+    const tasks = await Task.findAll({
+      order: ["deadline"],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      where: {
+        UserId: userId,
+      },
+    });
+    return tasks;
+  } catch (e) {
+    throw e;
+  }
+};
+
+getTaskByUserId(12).then(console.log).catch(console.err);
+*/
+
+async function getUsersWithTasks(){
+    try{
+        const result = User.findAll({
+            attributes: {
+                exclude: ['passwordHash']
+            },
+            include: [
+                {
+                    model: Task,
+                }
+            ]
+        });
+        //return result.map(i => i.get());
+        return result;
+    } catch(e){
+        throw e;
+    }
+}
+
+//getUsersWithTasks().then(console.log);
+
+async function getTasksWithUsers(){
+    try{
+        const result = Task.findAll({
+            where: {},
+            include: [
+                {
+                    model: User,
+                    as: 'owner'
+                }
+            ]
+        });
+        //return result.map(i => i.get());
+        return result;
+    } catch(e){
+        throw e;
+    }
+}
+
+getTasksWithUsers().then(console.log);
+
