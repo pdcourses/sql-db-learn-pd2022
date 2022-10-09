@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "build": "node --exec babel-node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/pdcourses/sql-db-learn-pd2022#readme",
   "dependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/node": "^7.19.1",
+    "@babel/preset-env": "^7.19.3",
     "bcrypt": "^5.1.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
