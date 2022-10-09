@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    //tableName: 'Users',
+    //underscored: true, // авто преобразование имен для базы данных в snake case//underscored: true, // авто преобразование имен для базы данных в snake case
   });
   return User;
 };

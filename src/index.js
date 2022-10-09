@@ -86,5 +86,33 @@ const deleteUser = async id => {
     }
 }
 
-deleteUser(1).then(console.log).catch(console.err);
-getAllUsers({limit: 3, offset: 0}).then(console.log).catch(console.err);
+//deleteUser(1).then(console.log).catch(console.err);
+//getAllUsers({limit: 3, offset: 0}).then(console.log).catch(console.err);
+
+// function updateUserById(req, res, next) {}
+// id: req.params.userId
+// data:  req.body
+
+const updateUser = async (id, data) => {
+    try{
+        const [updatedRowCount, updatedRows] = await User.update(
+            data, 
+            {where: {id: id},
+            returning: true,
+        });
+        if(updatedRowCount){
+            const user = updatedRows[0].get();
+            delete user.password;
+            return user;
+        }
+    } catch(e){
+        throw e;
+    }
+}
+
+console.log('Ищем 3 человека. инфа');
+getUserById(3).then(console.log).catch(console.err);
+console.log('Ищем 3 человека. обновление');
+updateUser(3, {email: "new3@mail.com", age: 25}).then(console.log).catch(console.err);
+console.log('Ищем 3 человека. инфа после обновления');
+getUserById(3).then(console.log).catch(console.err);
