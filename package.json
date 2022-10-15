@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js",
+    "start": "nodemon ./src/index.js",
     "build": "node --exec babel-node ./src/index.js"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "sequelize": "^6.23.2"
   },
   "devDependencies": {
+    "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.1"
   }
 }

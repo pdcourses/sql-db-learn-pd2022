@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
           field: 'userId'
         }
       });
+      User.belongsToMany(Role, { through: 'UserRoles'});
     }
   }
   User.init({
