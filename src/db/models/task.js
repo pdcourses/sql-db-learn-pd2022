@@ -6,7 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     static associate(models) {
       Task.belongsTo( models.User, {
-        foreignKey: { field: 'userId'}, as: 'owner'
+        foreignKey: { field: 'userId'}
+      });
+      Task.hasMany(models.Comment, {
+        foreignKey: {
+          field: 'taskId'
+        }
       });
     }
   }
