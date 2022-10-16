@@ -1,5 +1,5 @@
 'use strict';
-import {ROLES} from '../../constants.js';
+const {ROLES}  = require('../../constants.js');
 
 const {
   Model
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Role.belongsToMany(User, { through: 'UserRoles'});
+      Role.belongsToMany(models.User, { through: 'UserRoles'});
     }
   }
   Role.init({

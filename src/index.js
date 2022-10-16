@@ -1,3 +1,11 @@
+const { QueryTypes } = require('@sequelize/core');
+const {sequelize} = require('./db/models');
+
+const users = sequelize.query("SELECT * FROM users", 
+{ type: QueryTypes.SELECT });
+
+
+
 /*
 CRUD:  createUser, getUserById, updateUser, deleteUser
 (Sequelize: create, findByPk, update,  )
@@ -6,8 +14,8 @@ getAllUsers
 getUserByLogin
 */
 
-const { User, Task } = require("./db/models");
-const bcrypt = require('bcrypt');
+//const { User, Task } = require("./db/models");
+//const bcrypt = require('bcrypt');
 
 /*
 const hashPasswordFun = async password => {
@@ -114,6 +122,7 @@ getUserById(3).then(console.log).catch(console.err);
 // [id, createdAt, updatedAt],
 // userId, name, isDone, deadline
 
+/*
 // createTask function
 const createTask = async (data) => {
   try {
@@ -216,6 +225,8 @@ const getTaskByUserId = async (userId) => {
 getTaskByUserId(12).then(console.log).catch(console.err);
 */
 
+/*
+
 async function getUsersWithTasks(){
     try{
         const result = User.findAll({
@@ -256,3 +267,5 @@ async function getTasksWithUsers(){
 }
 
 getTasksWithUsers().then(console.log);
+
+*/

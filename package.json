@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./src/index.js",
-    "build": "node --exec babel-node ./src/index.js"
+    "build": "nodemon --exec babel-node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "@babel/core": "^7.19.3",
     "@babel/node": "^7.19.1",
     "@babel/preset-env": "^7.19.3",
+    "@sequelize/core": "^7.0.0-alpha.10",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "pg": "^8.8.0",
