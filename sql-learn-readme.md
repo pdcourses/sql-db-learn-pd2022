@@ -74,3 +74,69 @@ npx sequelize db:seed --seed name-seed
 npx sequelize db:seed:all:undo
 npx sequelize db:seed:undo --seed name-seed
 
+
+## Assosiations
+https://sequelize.org/docs/v7/core-concepts/assocs/
+
+Связи 
+
+1 один-к-одному
+Таблица Родитель: The HasOne association 
+Таблица Дочерняя: The BelongsTo association 
+
+2 один-ко-многим
+Таблица Родитель: The HasMany association
+Таблица Дочерняя: The BelongsTo association 
+
+User.hasMany(models.Task, {foreignKey: {field: 'userId'}});
+Task.belongsTo( models.User, {foreignKey: { field: 'userId'}});
+
+queryInterface.createTable('Tasks', {
+      id: {},
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        field: 'userId',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+
+3 Многие-ко-многим
+Таблица Родитель1: The BelongsToMany association
+Таблица Родитель2: The BelongsToMany association
+связь через дополнительную промежуточную таблицу
+
+User.belongsToMany(Role, { through: 'UserRoles'});
+
+Role.belongsToMany(User, { through: 'UserRoles'});
+
+queryInterface.createTable('UserRoles', {
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'RESTRICT'
+      },
+      roleId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Roles',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'RESTRICT'
+      },
+      createdAt: {},
+      updatedAt: {},
+
+
+
